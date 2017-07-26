@@ -8,11 +8,20 @@
   <body>
 
   <form action="/" method="post">
-    <h1>User Name</h1>
-    <p>Enter your email</p>
-    <input type="text" name="email" placeholder="email address" />
+    <h1>Add a todo</h1>
+    <input type="text" name="todo" placeholder="To Do" />
     <button type="submit">Submit</button>
   </form>
+
+  <ul>
+  {{#todos}}
+    <li>{{body}}</li>
+  {{/todos}}
+  </ul>
+
+  {{^todos}}
+    <span>noo</span>
+  {{/todos}}
 
   </body>
 </html>

@@ -1,17 +1,17 @@
 const fs = require('fs');
 
 let isDone;
+let existingTodos;
 
 const addTodo = (body, isDone = false) => {
   let todo = { body, isDone };
-  let todos = [];
 
-  todos.push(todo);
-  fs.writeFileSync('existing-todos.json', JSON.stringify(todos));
+  existingTodos = JSON.parse(fs.readFileSync('./existingtodos.json'));
 
-  const existingTodos = fs.readFileSync('existing-todos.json');
-  todos = JSON.parse(existingTodos);
+  existingTodos.todos.push(todo);
+  fs.writeFileSync('./existingtodos.json', JSON.stringify(existingTodos));
+  console.log({existingTodos})
 
 };
 
-module.exports = { addTodo };
+module.exports = { addTodo, existingTodos };
