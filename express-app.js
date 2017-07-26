@@ -1,9 +1,9 @@
+const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const mustacheExpress = require('mustache-express');
-const addTodo = require('./app');
-const existingTodos = require('./existingtodos.json');
+const appHelper = require('./app');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -17,12 +17,21 @@ app.listen(3000, () => {
   console.log('Listening on port 3000');
 });
 
-app.get('/', function(req, res){
-  res.render('home', existingTodos);
+app.get('/', (request, response) => {
+  response.render('home', appHelper.readTodos());
+  console.log(appHelper)
+  console.log("HEY" + appHelper.readTodos());
+})
+
+app.post('/create', (request, response) => {
+  const toDoItem = request.body.todo;
+  appHelper.addToDo(toDoItem);
+  response.redirect('/');
 });
 
-app.post('/', function(req, res){
-  const todo = req.body.todo;
-  addTodo.addTodo(todo);
-  res.render('home', existingTodos);
+app.post('/complete/:id', (request, response) => {
+  const todoId = parseInt(request.params.id);
+  console.log(todoId);
+  appHelper.toggleTodo(todoId);
+  response.redirect('/');
 });

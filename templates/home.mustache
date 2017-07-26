@@ -7,20 +7,24 @@
   </head>
   <body>
 
-  <form action="/" method="post">
+  <form action="/create" method="post">
     <h1>Add a todo</h1>
     <input type="text" name="todo" placeholder="To Do" />
     <button type="submit">Submit</button>
   </form>
 
   <ul>
-  {{#todos}}
-    <li>{{body}}</li>
-  {{/todos}}
+    {{#todos}}
+      <li class={{isChecked}}>{{body}} |
+        <form action="/complete/{{id}}" method="post">
+          <button type="submit">Complete</button>
+        </form>
+      </li>
+    {{/todos}}
   </ul>
 
   {{^todos}}
-    <span>noo</span>
+    <span>no items found</span>
   {{/todos}}
 
   </body>

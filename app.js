@@ -1,16 +1,25 @@
 const fs = require('fs');
 
-let isDone;
-let existingTodos = JSON.parse(fs.readFileSync('./existingtodos.json'));
-let todoId;
+let existingToDos = JSON.parse(fs.readFileSync('./existingtodos.json', 'utf8')), isChecked, id;
 
-const addTodo = (body, isDone = false, todoId) => {
-  todoId = existingTodos.todos.length + 1;
-  let todo = { body, isDone, todoId };
+const writeTodos = () => {
+  fs.writeFileSync('./existingtodos.json', JSON.stringify(existingToDos));
+}
 
-  existingTodos.todos.push(todo);
-  fs.writeFileSync('./existingtodos.json', JSON.stringify(existingTodos));
-  console.log({existingTodos})
+const readTodos = () => {
+  return JSON.parse(fs.readFileSync('./existingtodos.json').toString());
+}
+
+const addToDo = (body, isChecked = "unchecked", id = existingToDos.todos.length + 1) => {
+  let todo = { body, isChecked, id };
+  existingToDos.todos.push(todo);
+  writeTodos();
 };
 
-module.exports = { addTodo, existingTodos};
+const toggleTodo = (todoId) => {
+  let currentTodo = existingToDos.todos.find(todo => todo.id === todoId );
+  currentTodo.isChecked = currentTodo.isChecked === "checked" ? "unchecked" : "checked";
+  writeTodos();
+}
+
+module.exports = { addToDo, existingToDos, readTodos, toggleTodo };
