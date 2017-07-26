@@ -1,8 +1,10 @@
 const fs = require('fs');
 
-const addTodo = (body) => {
+let isDone;
+
+const addTodo = (body, isDone = false) => {
+  let todo = { body, isDone };
   let todos = [];
-  let todo = { body };
 
   todos.push(todo);
   fs.writeFileSync('existing-todos.json', JSON.stringify(todos));
