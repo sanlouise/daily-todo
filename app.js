@@ -11,10 +11,10 @@ const readTodos = () => {
 }
 
 const addToDo = (body, isChecked = "unchecked", id = existingToDos.todos.length + 1) => {
-  let todo = { body, isChecked, id };
+  let todo = { id, body, isChecked };
   existingToDos.todos.push(todo);
   writeTodos();
-};
+}
 
 const toggleTodo = (todoId) => {
   let currentTodo = existingToDos.todos.find(todo => todo.id === todoId );
@@ -22,4 +22,8 @@ const toggleTodo = (todoId) => {
   writeTodos();
 }
 
-module.exports = { addToDo, existingToDos, readTodos, toggleTodo };
+// const destroyAll = (existingToDos) => {
+//   existingToDos.todos = [];
+// }
+
+module.exports = { addToDo, existingToDos, readTodos, toggleTodo};

@@ -3,29 +3,39 @@
   <head>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
-    <title>To do list</title>
+    <link rel="stylesheet" href="/styles.css">
+    <title>Amazing Todo App</title>
   </head>
   <body>
 
-  <form action="/create" method="post">
-    <h1>Add a todo</h1>
-    <input type="text" name="todo" placeholder="To Do" />
-    <button type="submit">Submit</button>
-  </form>
+    <div class="tododiv">
+      <form action="/create" method="post">
+        <h1>Amazing Todo App</h1>
+        <input type="text" name="todo" placeholder="Write your awesome todo here!" />
+        <button id="addnote" type="submit">Add Todo</button>
+      </form>
 
-  <ul>
-    {{#todos}}
-      <li class={{isChecked}}>{{body}} |
-        <form action="/complete/{{id}}" method="post">
-          <button type="submit">Complete</button>
-        </form>
-      </li>
-    {{/todos}}
-  </ul>
+      <table>
+        {{#todos}}
+        <tr>
+          <td class={{isChecked}}>{{body}}</td>
+          <td>
+            <form action="/complete/{{id}}" method="post">
+              <button id="complete-btn" type="submit">Complete Task</button>
+            </form>
+          </td>
+        </tr>
+        {{/todos}}
+      </table>
 
-  {{^todos}}
-    <span>no items found</span>
-  {{/todos}}
+      {{^todos}}
+        You have no to do's yet!
+      {{/todos}}
 
+      <!-- <form action="/destroy" method="post">
+        <button id="clear-items" type="submit">Clear To Do List</button>
+      </form> -->
+
+    </div>
   </body>
 </html>
