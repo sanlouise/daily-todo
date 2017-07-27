@@ -22,8 +22,4 @@ const toggleTodo = (todoId) => {
   writeTodos();
 }
 
-// const destroyAll = (existingToDos) => {
-//   existingToDos.todos = [];
-// }
-
-module.exports = { addToDo, existingToDos, readTodos, toggleTodo};
+module.exports = { addToDo, existingToDos, readTodos, toggleTodo };

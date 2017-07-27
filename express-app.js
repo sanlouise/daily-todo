@@ -4,10 +4,13 @@ const bodyParser = require('body-parser');
 const app = express();
 const mustacheExpress = require('mustache-express');
 const appHelper = require('./app');
+const expressValidator = require('express-validator');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(expressValidator())
 
 app.engine('mustache', mustacheExpress());
 app.set('views', './templates');
@@ -23,8 +26,18 @@ app.get('/', (request, response) => {
 
 app.post('/create', (request, response) => {
   const toDoItem = request.body.todo;
-  appHelper.addToDo(toDoItem);
-  response.redirect('/');
+  request
+    .checkBody("body", "You need to type something")
+    .notEmpty();
+
+  const errors = request.validationErrors();
+
+  if (errors) {
+    response.render('home', {errors: errors})
+  } else {
+    appHelper.addToDo(toDoItem);
+    response.redirect('/');
+  }
 })
 
 app.post('/complete/:id', (request, response) => {
@@ -32,8 +45,3 @@ app.post('/complete/:id', (request, response) => {
   appHelper.toggleTodo(todoId);
   response.redirect('/');
 })
-//
-// app.post('/destroy', (request, response) => {
-//   appHelper.destroyAll();
-//   response.redirect('/');
-// })

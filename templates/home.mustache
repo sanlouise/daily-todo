@@ -15,6 +15,10 @@
         <button id="addnote" type="submit">Add Todo</button>
       </form>
 
+      {{#errors}}
+        {{msg}}
+      {{/errors}}
+
       <table>
         {{#todos}}
         <tr>
@@ -31,10 +35,6 @@
       {{^todos}}
         You have no to do's yet!
       {{/todos}}
-
-      <!-- <form action="/destroy" method="post">
-        <button id="clear-items" type="submit">Clear To Do List</button>
-      </form> -->
 
     </div>
   </body>
